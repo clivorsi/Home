@@ -14,7 +14,7 @@ def APIToDB():
     tickers = yf.Tickers('aapl')
     aapl = tickers.tickers.AAPL.history(period="max").reset_index()
     aapl['Stock Splits'] = aapl['Stock Splits'].astype('int')
-    aapl = aapl[aapl.Date == date.today()]
+    aapl = aapl[aapl.Date.dt.strftime("%Y-%m-%d") == date.today().strftime("%Y-%m-%d")]
     conn_string = "dbname='postgres' host='localhost' user='postgres' password='postgres'"
     conn=db.connect(conn_string)
     cur = conn.cursor()
